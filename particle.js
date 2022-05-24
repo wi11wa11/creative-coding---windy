@@ -12,9 +12,9 @@ class Particle {
     this.r = 4;
 
     //variables to set up angle velocity changing with perlin noise
-    this.angle = 0
-    this.angleA = 0
-    this.angleV = 0
+    this.angle = 0;
+    this.angleA = 0;
+    this.angleV = 0;
 
     //this.colour = color(random(255), random(255), random(255));
     this.colour = color(20);
@@ -25,9 +25,25 @@ class Particle {
     this.vel.mult(0.99);
   }
 
-  direction() {
+  //simulates a drag force on the particles as they gain velocity,
+  //could also be achieved by placing a limit on the velocity. However,
+  //this slows the particles as the velocity increases rather than accelerates up to a point
+  drag() {
+    //direction of drag force
+    let drag = this.vel.copy();
+    drag.normalize();
+    drag.mult(-1);
+
+    //magnitude of drag force
+    let cofd = 0.001;
+    let speedSq = this.vel.magSq();
+    drag.setMag(cofd * speedSq);
+
+    this.applyForce(drag);
+  }
+
+  changeAngle() {
     //if the particle is moving left, it changes direction with perlin noise limited to between 45 deg and 135 deg
-    let moveL = this.vel.mult(noise(45, 135))
     //if particles is moving right, it changes direction with perlin noise limited to between 45 deg and 135 deg
   }
 
@@ -78,7 +94,6 @@ class Particle {
     rotate(this.angle);
     triangle(-this.r, -this.r / 2, -this.r, this.r / 2, this.r, 0);
     pop();
-
 
     // circle(this.pos.x, this.pos.y, this.r * 2);
   }

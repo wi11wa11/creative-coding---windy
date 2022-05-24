@@ -19,18 +19,26 @@ function draw() {
     if (keyIsPressed && key == "d") {
       let windWest = createVector(0.1, 0);
       particles[i].applyForce(windWest);
-    } //if 'd' is pressed then a wind force is applied from the west
+
+      n = random(-0.2, 0.2);
+      let windRandom = createVector(0, n);
+      particles[i].applyForce(windRandom);
+    } //if 'd' is pressed then a wind force is applied from the west,
 
     if (keyIsPressed && key == "a") {
       let windEast = createVector(-0.1, 0);
       particles[i].applyForce(windEast);
+
+      n = random(-0.2, 0.2);
+      let windRandom = createVector(0, n);
+      particles[i].applyForce(windRandom);
     } //if 'a' is pressed then a wind force is applied from the east
-    
+
     //particles[i].direction();
+    particles[i].drag();
     particles[i].friction();
     particles[i].edges();
     particles[i].update();
     particles[i].show();
-
   }
 }
